@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Thu, 25 May 2023 10:23:37 GMT
+Content-length: 36
+Server: SelfMadeServer v0.0.1
+Content-type: text/html; charset = utf8
+Connection: close
+
+<!-- 1.html -->
+<H1> FILE ONE </H1>
