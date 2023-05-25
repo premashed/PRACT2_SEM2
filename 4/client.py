@@ -31,8 +31,9 @@ def receive():
 
 thread = threading.Thread(target=receive)
 thread.start()
+print('You can chat now')
 while True:
-    msg = input("Сообщение: ")
+    msg = input("> ")
     if msg == 'exit':
         send(connection, username + ' has disconnected')
         break
