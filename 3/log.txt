@@ -1,0 +1,10 @@
+Server started at 2023-05-25 09:59:06.725829
+Connection attempt by 127.0.0.1 at 2023-05-25 09:59:32.194759
+mash tried to log in at mash
+mash successfully logged in at 2023-05-25 09:59:32.194759
+Server: Welcome to the server, mash! at 2023-05-25 09:59:32.195293
+mash: hi at 2023-05-25 09:59:34.128401
+Server: whats up at 2023-05-25 09:59:38.851477
+mash: nm at 2023-05-25 09:59:41.938741
+Server: ok at 2023-05-25 09:59:44.610437
+mash: exit at 2023-05-25 09:59:47.965025
