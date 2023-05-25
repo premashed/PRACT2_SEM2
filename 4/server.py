@@ -13,7 +13,6 @@ def handle_client(conn, addr):
     log = open('log.txt', 'a+')
     log.write('New connection {}'.format(addr))
     log.write(' at {}\n'.format(datetime.now()))
-    print('lmao')
     try:
         while True:
             message = conn.recv(1024).decode()
