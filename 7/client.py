@@ -3,7 +3,7 @@ import socket
 
 currentDirectory = ''
 print('Please use one of the following commands: ')
-print('makefile <filename>, writefile <filename> <content>, readfile <filename>, delfile <filename>, quit')
+print('make <filename>, write <filename> <content>, read <filename>, delete<filename>, quit')
 while True:
     request = input('{}>'.format(currentDirectory))
     sock = socket.socket()
