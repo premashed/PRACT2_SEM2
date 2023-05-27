@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 import socket
 import psutil
 
@@ -36,40 +37,44 @@ if not userFound:
     welc += 'You are not in the database! Please check your credentials\n'
     log.write('{} tried to connect'.format(username))
     log.write(' at {}\n'.format(datetime.now()))
+def auth():
+    if auth:
+        log.write('{} successfully logged in'.format(username))
+        log.write(' at {}\n'.format(datetime.now()))
+        conn.send(welc.encode())
+        log.write('Server: ' + welc)
+        log.write(' at {}\n'.format(datetime.now()))
+        while True:
+            try:
+                data = conn.recv(1024).decode()
+            except ConnectionAbortedError:
+                time.sleep(100)
+                auth()
+            else:
+                print('{}: {}'.format(username, data))
+                log.write('{}: '.format(username))
+                log.write(data + ' at {}\n'.format(datetime.now()))
+                if data == 'quit':
+                    log.write('{} disconnected at {}\n'.format(username, datetime.now()))
+                    break
+                elif data == 'time':
+                    message = str(datetime.now())
+                    conn.send(message.encode())
+                    log.write('Server: ' + message + ' at {}\n'.format(datetime.now()))
+                elif data == 'whoami':
+                    message = username
+                    conn.send(message.encode())
+                    log.write('Server: ' + message + ' at {}\n'.format(datetime.now()))
+                else:
+                    message = 'Server: ' + data
+                    conn.send(message.encode())
+                    log.write('Server: ' + message + ' at {}\n'.format(datetime.now()))
+    else:
+        log.write('Authentication attempt failed at {}\n'.format(datetime.now()))
+        conn.send(welc.encode())
+        log.write('Server: ' + welc + ' at\n'.format(datetime.now()))
 
-if auth:
-    log.write('{} successfully logged in'.format(username))
-    log.write(' at {}\n'.format(datetime.now()))
-    conn.send(welc.encode())
-    log.write('Server: ' + welc)
-    log.write(' at {}\n'.format(datetime.now()))
-    while True:
-        data = conn.recv(1024).decode()
-        print('{}: {}'.format(username, data))
-        log.write('{}: '.format(username))
-        log.write(data + ' at {}\n'.format(datetime.now()))
-        if data == 'quit':
-            log.write('{} disconnected at {}\n'.format(username, datetime.now()))
-            break
-        elif data == 'time':
-            message = str(datetime.now())
-            conn.send(message.encode())
-            log.write('Server: ' + message + ' at {}\n'.format(datetime.now()))
-        elif data == 'whoami':
-            message = username
-            conn.send(message.encode())
-            log.write('Server: ' + message + ' at {}\n'.format(datetime.now()))
-        else:
-            print('Please enter message:')
-            message = input('> ')
-            conn.send(message.encode())
-            log.write('Server: ' + message + ' at {}\n'.format(datetime.now()))
-else:
-    log.write('Authentication attempt failed at {}\n'.format(datetime.now()))
-    conn.send(welc.encode())
-    log.write('Server: ' + welc + ' at\n'.format(datetime.now()))
-
-
+auth()
 log.write('Server closed at {}\n'.format(datetime.now()))
 log.close()
 conn.close()
