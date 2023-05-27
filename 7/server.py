@@ -2,32 +2,21 @@ import socket
 import os
 
 
-def process(req):
-    request = req.split(' ')
-    reqlen = len(request)
-    if request[0] == 'makefile':
-        if reqlen == 2:
-            return create_file(rootDirectory, request[1])
-        else:
-            return 'Invalid number of arguments'
-    elif request[0] == 'writefile':
-        if reqlen > 2:
-            return write_file(rootDirectory, request[1], request[2:])
-        else:
-            return 'Invalid number of arguments'
-    elif request[0] == 'readfile':
-        if reqlen == 2:
-            return read_file(rootDirectory, request[1])
-        else:
-            return 'Invalid number of arguments'
-    elif request[0] == 'delfile':
-        if reqlen == 2:
-            return delete_file(rootDirectory, request[1])
-        else:
-            return 'Invalid number of arguments'
-    elif request[0] == 'quit':
-        return 'Connection has been reset'
-    return 'Unknown command'
+def process(command, req):
+    print(command, req)
+    if req != [] and command != 'quit':
+        if command == 'make':
+            return create_file(rootDirectory, req[0])
+        elif command == 'write':
+            return write_file(rootDirectory, req[0], req[1:])
+        elif command == 'read':
+            return read_file(rootDirectory, req[0])
+        elif command == 'delete':
+            return delete_file(rootDirectory, req[0])
+        elif command == 'quit':
+            return 'Connection has been reset'
+    else:
+        return 'Unknown command'
 
 
 def create_file(path, name):
@@ -84,7 +73,10 @@ while True:
     conn, addr = sock.accept()
     request = conn.recv(1024).decode()
     print(request)
-    response = process(request)
+    request = request.split()
+    command = request[0]
+    del request[0]
+    response = process(command, request)
     print(response)
     conn.send(response.encode())
     if request == 'quit':
