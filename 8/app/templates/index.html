@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+h1 {
+padding: 100px;
+}
+</style>
+    <h1>Welcome to the webpage, {{ current_user.username }}!</h1>
+{% endblock %}

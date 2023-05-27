@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    </head>
+    <body>
+	<style>
+	body {
+	background-color:lightgrey;
+	padding: 200px;
+	}
+	</style>
+        <a href="{{ url_for('index') }}">Index</a>
+	{% if current_user.is_anonymous %}
+	<a href="{{ url_for('login') }}">Log in</a>
+	{% else %}
+	<a href="{{ url_for('logout') }}">Log out</a>
+	{% endif %}
+	<center>
+	<hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+	<li>{{ message }}</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+	{% block content %}{% endblock %}
+	</center>
+    </body>
+</html>
