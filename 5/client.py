@@ -2,11 +2,22 @@ import socket
 import pickle
 import cryptocode
 
+def load_key_from_file(filename):
+    with open(filename, "rb") as f:
+        key = f.read()
+    return key
+
+def save_key_to_file(filename, key):
+    with open(filename, "wb") as f:
+        f.write(key)
+
 sock = socket.socket()
 print('Please enter port: ')
 port = int(input('> '))
 sock.connect(('localhost', port))
 
+private_key = load_key_from_file('private.key')
+public_key = load_key_from_file('public.key')
 
 def encrypt():
     p, g, A = pickle.loads(sock.recv(1024))
@@ -21,7 +32,6 @@ def encrypt():
     sock.send(pickle.dumps(encrypted))
     return message
 
-
 def decrypt():
     p, g, a = 7, 5, 3
     A = g ** a % p
@@ -33,7 +43,6 @@ def decrypt():
     print('Encrypted message:', encrypted)
     message = cryptocode.decrypt(encrypted, key)
     print('Decrypted message:', message)
-
 
 while True:
     decrypt()
